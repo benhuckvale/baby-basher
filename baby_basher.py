@@ -1,4 +1,9 @@
 import pygame, sys, os, random
+import pygame.mixer
+
+__location__ = os.path.realpath(os.path.join(os.getcwd(),
+                                os.path.dirname(__file__)))
+sound_file = os.path.join(__location__, 'boop.wav')
 
 screen_width=1280
 screen_height=704
@@ -43,6 +48,9 @@ pygame.init()
 
 screen = pygame.display.set_mode((screen_width, screen_height)) 
 pygame.display.set_caption('Basher') 
+
+pygame.mixer.init()
+sound = pygame.mixer.Sound(sound_file)
  
 def process_events(events):
    quit=False
@@ -55,6 +63,7 @@ def process_events(events):
                   x, y = fudge_coords(*coords_for_char[event.unicode])
                   r=pygame.Rect(x, y, random.randint(30, 150), random.randint(30,150))
                   pygame.draw.rect(screen, colour.random(), r, 0)
+                  sound.play()
               except KeyError:
                   pass
       if event.type == pygame.QUIT: 
